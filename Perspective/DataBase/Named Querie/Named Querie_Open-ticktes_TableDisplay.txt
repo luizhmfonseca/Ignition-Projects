@@ -1,0 +1,11 @@
+SELECT 
+    t.id, 
+    t.title, 
+    t.equipment_id AS equipment, 
+    a.Asset_ID AS equipmentName, -- Replace this with the actual column names you need from Assets
+    t.description,
+    t.created_by,
+    t.tstamp,
+    t.status 
+FROM os_tickets t
+LEFT JOIN Assets a ON a.Asset_KEY = t.equipment_id;
