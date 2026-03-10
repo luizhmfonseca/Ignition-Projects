@@ -1,0 +1,7 @@
+## Configure Events
+## Events > Select "Folder Mouse Events" > "onClick"
+## Organize Actions > + "Script" 
+
+"def runAction(self, event):"
+popupID = self.view.params.popupid
+	system.perspective.closePopup(popupID)
