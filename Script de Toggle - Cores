@@ -1,0 +1,38 @@
+# 1. Initialize empty list for formatted data
+    formattedData = []
+    
+    for row in value:
+        newRow = dict(row)
+        
+        # INJECAO DO TOGGLE: Adiciona a coluna "Selected" com valor inicial Falso
+        newRow["Selected"] = False
+        
+        # --- (O resto do seu script de cores continua igualzinho aqui embaixo) ---
+        currentStatus = newRow.get("Status", "")
+        cellColor = ""
+        
+        if currentStatus == "Requested":
+            cellColor = "#F8D7DA"
+        elif currentStatus == "In Progress":
+            cellColor = "#FFF3CD"
+        elif currentStatus == "Closed":
+            cellColor = "#D4EDDA"
+        elif currentStatus == "Canceled":
+            cellColor = "#D5D5D5"
+            
+        if cellColor != "":
+            newRow["Status"] = {
+                "value": currentStatus,
+                "style": {
+                    "backgroundColor": cellColor,
+                    "borderRadius": "5px",
+                    "padding": "4px 8px",
+                    "color": "#333333",
+                    "textAlign": "center",
+                    "fontWeight": "bold"
+                }
+            }
+            
+        formattedData.append(newRow)
+        
+    return formattedData
