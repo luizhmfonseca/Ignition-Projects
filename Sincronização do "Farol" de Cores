@@ -1,0 +1,33 @@
+def transform(self, value, quality, timestamp):
+	# Converte o dataset para PyDataset para iterar facilmente
+	pyDs = system.dataset.toPyDataSet(value)
+	
+	# Mapeamento de cores MAIS VISÍVEIS (Tons Pastel Nível 3)
+	# backgroundColor: Fundo da linha (mais visível, menos "branco")
+	# color: Cor do texto (mantido cinza escuro para melhor contraste)
+	status_colors = {
+		"Requested":   {"backgroundColor": "#FFB3BA", "color": "#721C24"}, # Rosa visível e nítido
+		"In Progress": {"backgroundColor": "#FFEEA8", "color": "#856404"}, # Amarelo visível e nítido
+		"Closed":      {"backgroundColor": "#D5F5E3", "color": "#155724"}, # Verde menta claro visível e nítido
+		"Canceled":    {"backgroundColor": "#DFDFDF", "color": "#6C757D"}  # Cinza médio-claro limpo e visível
+	}
+	
+	output_rows = []
+	
+	for row in pyDs:
+		# Cria um dicionário apenas com os dados brutos da query
+		row_values = {}
+		for col in value.columnNames:
+			row_values[col] = row[col]
+		
+		# Cria o objeto estruturado que a Tabela do Perspective exige para cores
+		row_object = {"value": row_values}
+		
+		# Aplica a cor visível baseada no Status
+		current_status = row["Status"]
+		if current_status in status_colors:
+			row_object["style"] = status_colors[current_status]
+			
+		output_rows.append(row_object)
+		
+	return output_rows
